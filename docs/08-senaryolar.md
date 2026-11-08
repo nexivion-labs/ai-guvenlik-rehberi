@@ -74,7 +74,7 @@ Her senaryo aynı yapıdadır: **ne olur**, **nasıl önlenir**, **nasıl fark e
 
 **Fark etme**
 - Birden fazla hizmette aynı anda tanınmayan oturumlar ya da zorunlu çıkışlar.
-- Güvenlik aracında "Trojan:…Stealer" türü tespitler (vakamızda dokuz gün boyunca vardı).
+- Güvenlik aracında "Trojan" türü tespitler (vakamızda Wacatac ve Bearfoos adlarıyla, sekiz gün içinde 25 kez).
 
 **Müdahale**
 1. Bilgisayarı ağdan ayırın; o bilgisayarda hiçbir hesaba girmeyin ([Bölüm 2](02-olay-aninda.md)).

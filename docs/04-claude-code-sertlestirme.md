@@ -12,7 +12,7 @@ Bu bölüm Claude Code için yazıldı; ilkeler (en az yetki, onay, yalıtım, s
 
 Claude Code oturum bilgilerini macOS'ta Anahtar Zinciri'nde (Anahtar Zinciri yoksa dosyaya düşer), Linux'ta `~/.claude/.credentials.json` (dosya izni 0600), Windows'ta `%USERPROFILE%\.claude\.credentials.json` dosyasında tutar. Uzak MCP sunucularına OAuth ile bağlandıysanız o token'lar da aynı dosyadadır. Bu dosyalar yalnız sizin kullanıcınıza açıktır, ama **sizin kullanıcınızla çalışan her program** (zararlı bir eklenti dahil) onlara ulaşabilir ve token'lar taşınabilirdir: dosya başka bir makineye kopyalanınca orada da çalışır. Bağımsız araştırmacılar ([Silverfort, 2026](https://www.silverfort.com/blog/skipping-the-lock-a-claude-code-cli-weakness-lets-any-macos-process-read-stored-credentials/)) macOS'ta Anahtar Zinciri kaydının varsayılan erişim listesiyle oluşturulduğunu ve kullanıcı yetkisiyle çalışan bir sürecin parola sorulmadan okuyabildiğini göstermiştir.
 
-Vakamızda olan tam olarak buydu: saldırgan şifreye değil, bilgisayardaki oturum bilgisine ulaştı. Bu yüzden aşağıdaki ayarlar **ikinci savunma hattıdır**; birinci hat [Bölüm 1](01-kurmadan-once.md)'deki kurulum disiplinidir.
+Vakamızda en olası açıklama tam olarak buydu: saldırgan şifreye değil, bilgisayardaki oturum bilgisine ulaştı. Bu yüzden aşağıdaki ayarlar **ikinci savunma hattıdır**; birinci hat [Bölüm 1](01-kurmadan-once.md)'deki kurulum disiplinidir.
 
 ## 4.2 Ayar dosyaları ve öncelik
 

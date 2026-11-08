@@ -4,7 +4,7 @@
 
 Bir depoyu klonlamadan, bir eklentiyi ya da paketi kurmadan, bir kurulum betiğini çalıştırmadan önce aşağıdaki soruların hepsinin cevabı "evet" olmalıdır. Bir tanesi bile "hayır" ise kurmayın.
 
-> **Neden bu kadar katı?** Yapay zekâ ajanları bilgisayarınızda sizin yetkinizle dosya okur, komut çalıştırır ve ağa bağlanır. Bilgisayara giren her araç, ajanın da elindeki her şeye dolaylı olarak erişir: API anahtarları, oturum bilgileri, kaynak kod. Vakamızda tek bir eklenti, dokuz gün içinde Claude hesabını ele geçirmeye yetti.
+> **Neden bu kadar katı?** Yapay zekâ ajanları bilgisayarınızda sizin yetkinizle dosya okur, komut çalıştırır ve ağa bağlanır. Bilgisayara giren her araç, ajanın da elindeki her şeye dolaylı olarak erişir: API anahtarları, oturum bilgileri, kaynak kod. Vakamızda bilgisayar dokuz gün boyunca enfekte kaldı ve sonunda Claude hesabı ele geçirildi; en güçlü şüpheli, resmî pazar yeri dışından kurulmuş tek bir eklentiydi.
 
 ---
 
@@ -18,7 +18,7 @@ Bir depoyu klonlamadan, bir eklentiyi ya da paketi kurmadan, bir kurulum betiği
 ## 1.2 Kimlik ve geçmiş
 
 5. **Depo ya da yayıncı ne kadar eski?** Birkaç günlük bir hesap, tek katkıcı, ani yıldız artışı ve boş geçmiş uyarı işaretidir.
-6. **Topluluk ne diyor?** Ad ile birlikte "malware", "virus", "trojan", "stealer" kelimelerini arayın. Bizim vakamızdaki eklenti için bağımsız bir araştırmacı uyarıyı olaydan önce yayımlamıştı.
+6. **Topluluk ne diyor?** Ad ile birlikte "malware", "virus", "trojan", "stealer" kelimelerini arayın. Bizim vakamızdaki eklenti için bağımsız bir araştırmacı uyarıyı, eklenti kurulmadan bir gün önce yayımlamıştı.
 7. **Son sürüm neden çıktı?** Uzun süre güncellenmeyen bir paketin birden yeni bir sürüm yayımlaması, bakımcı hesabının ele geçirildiğinin işareti olabilir. Değişiklik notu yoksa ya da kodla uyuşmuyorsa birkaç gün bekleyin.
 
 ## 1.3 Kodu çalıştırmadan okuyun
@@ -77,7 +77,7 @@ Bu komutlar yalnız okur; hiçbir şey kurmaz ya da çalıştırmaz. Yine de kar
 
 ## 1.6 Kurduktan sonra
 
-19. **İlk günleri izleyin** (bütün platformların komutları: [Bölüm 10](10-platform-basvuru-karti.md)): Windows Güvenliği → Koruma geçmişi, açılışta çalışan programlar ve tanımadığınız süreçler. Bizim vakamızda Defender dokuz gün boyunca her gün bir tespit kaydetti; kimse bakmadığı için fark edilmedi. macOS'ta Sistem Ayarları → Genel → Oturum Açma Öğeleri ve `~/Library/LaunchAgents`, Linux'ta `systemctl --user list-unit-files` ve `crontab -l` bakılacak ilk yerlerdir.
+19. **İlk günleri izleyin** (bütün platformların komutları: [Bölüm 10](10-platform-basvuru-karti.md)): Windows Güvenliği → Koruma geçmişi, açılışta çalışan programlar ve tanımadığınız süreçler. Bizim vakamızda Defender sekiz gün içinde beş ayrı günde toplam 25 tespit kaydetti; kimse bakmadığı için fark edilmedi. macOS'ta Sistem Ayarları → Genel → Oturum Açma Öğeleri ve `~/Library/LaunchAgents`, Linux'ta `systemctl --user list-unit-files` ve `crontab -l` bakılacak ilk yerlerdir.
 20. **Ekipte kural olsun:** Şirket bilgisayarlarında ve ortak hesaplarda yalnız [onaylı listedeki](../sablonlar/onayli-araclar.md) araçlar kurulur. VS Code'da bu kural teknik olarak da uygulanabilir: [Bölüm 6.3](06-tedarik-zinciri.md#63-vs-code-eklenti-izin-listesi).
 
 ---

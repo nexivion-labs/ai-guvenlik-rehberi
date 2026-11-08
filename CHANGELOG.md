@@ -1,5 +1,12 @@
 # Değişiklikler
 
+## 2.2 — 8 Kasım 2026
+
+- Vaka anlatımı kendi adli kayıtlarımızla karşılaştırıldı ve düzeltildi: olay tarihi (4 Kasım), Defender tespitlerinin gerçek dağılımı (beş günde 25 tespit), oturum bilgisinin çalınmasının "en olası açıklama" olduğu, iki şüpheli yazılımın da tek satırlık betikle kurulduğu.
+- Alpme kutusu kendi delil paketimizle doğrulandı; eklenti kimliği, kurulum yolu ve kod dosyasının SHA-256 parmak izi eklendi. Rehberin adını kullanan sahte araçlara karşı uyarı eklendi.
+- Yeni: Bölüm 15, Tuzak kur, zinciri kır (saldırı zinciri tablosu, kanarya sırları, ajan işlem kaydı kancası, talimat dosyalarının kalıcılığı, dışa giden trafik, geri saldırmama).
+- Kırık iki kaynak bağlantısı düzeltildi; bir çalışmanın tarihi Mayıs 2026 olarak düzeltildi.
+
 ## 2.1 — 7 Kasım 2026 (akşam, iyileştirme döngüsü)
 
 On turluk araştırma–doğrulama döngüsü; ayrıntılar [DONGU-LOG.md](DONGU-LOG.md).
