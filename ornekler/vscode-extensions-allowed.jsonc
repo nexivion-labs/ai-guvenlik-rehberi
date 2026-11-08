@@ -1,0 +1,24 @@
+// VS Code kullanıcı ayarlarına (settings.json) eklenecek eklenti izin listesi örneği.
+// Gereken sürüm: VS Code 1.96 veya üzeri.
+// Ekip bilgisayarlarında aynı değeri AllowedExtensions politikasıyla zorunlu kılın.
+// Açıklamalar: docs/06-tedarik-zinciri.md#63-vs-code-eklenti-izin-listesi
+//
+// Kurallar:
+//   - Noktasız anahtar   = yayıncı kimliği (o yayıncının bütün eklentileri)
+//   - Noktalı anahtar    = tek bir eklenti (yayıncı.ad)
+//   - true               = izin ver
+//   - false              = engelle
+//   - "stable"           = yalnız kararlı sürümler (ön sürümler engelli)
+//
+// Aşağıdaki kimlikler örnektir; kendi onaylı listenize göre düzenleyin.
+{
+  "extensions.allowed": {
+    "*": false,
+    "microsoft": true,
+    "ms-vscode": true,
+    "github": true,
+    "anthropic.claude-code": true,
+    "esbenp.prettier-vscode": "stable",
+    "dbaeumer.vscode-eslint": "stable"
+  }
+}

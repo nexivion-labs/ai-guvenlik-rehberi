@@ -1,0 +1,48 @@
+# Sertleştirilmiş GitHub Actions iş akışı iskeleti.
+# Açıklamalar: docs/06-tedarik-zinciri.md#64-github-actions
+#
+# ÖNEMLİ: "<SHA>" yer tutucularını, kullandığınız eylem sürümünün kendi deposundaki
+# 40 karakterlik commit SHA'sıyla değiştirin. Bu dosyadaki SHA'lar bilerek boş bırakıldı;
+# başka bir yerden kopyalanmış SHA'ya güvenmeyin, eylemin resmî deposundan doğrulayın.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:          # pull_request_target DEĞİL
+    branches: [main]
+
+# Varsayılan: hiçbir izin yok. Her iş kendi ihtiyacını açıkça ister.
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read     # yalnız kodu okumak için
+    steps:
+      - uses: actions/checkout@<SHA>   # v4.x.y
+        with:
+          persist-credentials: false   # token sonraki adımlarda diskte kalmasın
+
+      - uses: actions/setup-node@<SHA> # v4.x.y
+        with:
+          node-version: 22
+
+      # Kilit dosyasına sadık kur, kurulum betiklerini çalıştırma
+      - run: npm ci --ignore-scripts
+
+      - run: npm test
+
+      # Güvenilmeyen değerleri run: içine doğrudan yazmayın; önce env'e atayın.
+      - name: PR başlığını güvenli biçimde yazdır
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BASLIGI: ${{ github.event.pull_request.title }}
+        run: echo "PR basligi - $PR_BASLIGI"

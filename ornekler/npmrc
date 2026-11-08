@@ -1,0 +1,17 @@
+# Bu dosyayı proje köküne .npmrc adıyla kopyalayın.
+# npm 11.10 – 11.x için. npm 12 ve üzerinde betikler zaten varsayılan olarak kapalıdır;
+# o sürümde ignore-scripts satırını KALDIRIN (onay listesini ezer) ve npm approve-scripts kullanın.
+# Açıklamalar: docs/06-tedarik-zinciri.md
+
+# Kurulum betiklerini (preinstall, install, postinstall) çalıştırma.
+# Betik gerektiren paketler için: npm ci --ignore-scripts && npm rebuild <paket>
+ignore-scripts=true
+
+# Git kaynaklı bağımlılıkları yalnız kök package.json'daki doğrudan bağımlılıklarda kabul et.
+allow-git=root
+
+# Yayımlanmasının üzerinden en az 7 gün geçmemiş sürümleri kurma.
+min-release-age=7
+
+# Sürümleri ^ ya da ~ olmadan, tam olarak kaydet.
+save-exact=true

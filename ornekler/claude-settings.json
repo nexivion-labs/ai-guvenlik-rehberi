@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Bash(git push --force *)",
+      "Bash(rm -rf *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(npm publish *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(npm install *)",
+      "Bash(pip install *)",
+      "Edit(./CLAUDE.md)",
+      "Edit(./.claude/**)",
+      "Edit(./.mcp.json)",
+      "Edit(./.github/workflows/**)"
+    ],
+    "allow": [
+      "Bash(npm run test *)",
+      "Bash(npm run lint *)",
+      "Bash(git status)",
+      "Bash(git diff *)"
+    ],
+    "disableBypassPermissionsMode": "disable"
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false,
+    "failIfUnavailable": true,
+    "filesystem": {
+      "denyRead": [
+        "~/.ssh",
+        "~/.aws",
+        "~/.claude/.credentials.json",
+        "~/**/.env"
+      ]
+    }
+  },
+  "enableAllProjectMcpServers": false,
+  "_not": "Bu dosya PROJE ayarıdır (.claude/settings.json). sandbox.credentials bloğu proje ayarlarında uygulanmaz; onu ~/.claude/settings.json içine koyun (docs/04-claude-code-sertlestirme.md#45-sandboxı-açın). _not anahtarı Claude Code tarafından yok sayılır; isterseniz silin."
+}

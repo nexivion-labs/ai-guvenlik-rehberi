@@ -1,0 +1,17 @@
+# .github/dependabot.yml
+# SHA ile sabitlenmiş eylemlerin ve npm bağımlılıklarının güncel kalması için.
+# Açıklamalar: docs/06-tedarik-zinciri.md#64-github-actions
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Yeni yayımlanan sürümleri hemen önermesin (ele geçirilmiş sürümlere karşı bekleme süresi).
+    # default-days 1–90 arası olabilir; semver-major/minor/patch-days ile ayrıştırılabilir.
+    cooldown:
+      default-days: 7
